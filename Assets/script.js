@@ -1,7 +1,9 @@
 var timeEl = document.querySelector(".time");
 var timeLeft = 75;
 var correct = 0;
+//Keeps track of which question the user is on
 var currentQuestion = 0;
+//List of Questions to display
 var Questions = [
 'Commonly used data types DO NOT include:',
 'The condition in an if / else statement is enclosed within _____.',
@@ -9,6 +11,7 @@ var Questions = [
 'String values must be enclosed within _____ when being assigned to variables.',
 'A very useful tool used during development and debugging for printing content to the debugger is:',
 ]
+//List of all possible answers
 var Answers = [
 'strings',  //0
 'booleans', //1
@@ -31,22 +34,23 @@ var Answers = [
 'for loops',        //2
 'console.log',      //3 CORRECT
 ]
+//User input
 var userAnswers = []
+//Actual Answers
 var adminAnswers = ['2', '2', '0', '2', '3']
 
 //ElementById Simplifier
 function getid(x) {
   return document.getElementById(x);
 }
+
 //Hide Questions
 function questionHide() {
   getid('question').style.display = 'block';
-  getid('btn0').style.display = 'block';
-  getid('btn1').style.display = 'block';
-  getid('btn2').style.display = 'block';
-  getid('btn3').style.display = 'block';
+  getid('buttons').style.display = 'block';
   getid('startButton').style.display = 'none';
 }
+
 //Renders Question
 function buildQuiz() {
   if (currentQuestion === 0) {
@@ -64,6 +68,33 @@ function buildQuiz() {
     getid('btn2').innerHTML = Answers[6];
     getid('btn3').innerHTML = Answers[7];
     currentQuestion++;
+  }
+  else if (currentQuestion === 2) {
+    getid('question').innerHTML = Questions[2];
+    getid('btn0').innerHTML = Answers[8];
+    getid('btn1').innerHTML = Answers[9];
+    getid('btn2').innerHTML = Answers[10];
+    getid('btn3').innerHTML = Answers[11];
+    currentQuestion++;
+  }
+  else if (currentQuestion === 3) {
+    getid('question').innerHTML = Questions[3];
+    getid('btn0').innerHTML = Answers[12];
+    getid('btn1').innerHTML = Answers[13];
+    getid('btn2').innerHTML = Answers[14];
+    getid('btn3').innerHTML = Answers[15];
+    currentQuestion++;
+  }
+  else if (currentQuestion === 4) {
+    getid('question').innerHTML = Questions[4];
+    getid('btn0').innerHTML = Answers[16];
+    getid('btn1').innerHTML = Answers[17];
+    getid('btn2').innerHTML = Answers[18];
+    getid('btn3').innerHTML = Answers[19];
+    currentQuestion++;
+  }
+  else if (currentQuestion >= 5) {
+    showResults();
   }
 }
 
@@ -102,9 +133,9 @@ function myTimer() {
 
 //Shows results of quiz
 function showResults() {
-  if (userAnswers === adminAnswers) {
-    
-  }
+  getid('question').style.display = 'none';
+  getid('buttons').style.display = 'none';
+  alert('Currently not implemented!')
 }
 
 startButton.addEventListener('click', buildQuiz);
@@ -118,5 +149,4 @@ btn0.addEventListener('click', userRecord0)
 btn1.addEventListener('click', userRecord1)
 btn2.addEventListener('click', userRecord2)
 btn3.addEventListener('click', userRecord3)
-submitButton.addEventListener('click', showResults);
 viewHighscores.addEventListener('click', showResults);
