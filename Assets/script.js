@@ -122,10 +122,7 @@ function myTimer() {
     timeLeft--;
     timeEl.textContent = timeLeft + " seconds left.";
 
-    if (showResults() === true) {
-      clearInterval(timerInterval);
-    }
-    else if(timeLeft === 0) {
+    if(timeLeft === 0) {
       clearInterval(timerInterval);
       alert('Out of time!')
       showResults();
