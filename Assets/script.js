@@ -1,6 +1,6 @@
 var timeEl = document.querySelector(".time");
+var score = 0;
 var timeLeft = 75;
-var correct = 0;
 //Keeps track of which question the user is on
 var currentQuestion = 0;
 //List of Questions to display
@@ -21,10 +21,10 @@ var Answers = [
 'curly brackets',   //1
 'parentheses',      //2 CORRECT
 'square brackets',  //3
-'numbers & strings',  //0 CORRECT
+'numbers & strings',  //0
 'other arrays',       //1
 'booleans',           //2
-'all of the above',   //3
+'all of the above',   //3 CORRECT
 'commas',         //0
 'curly brackets', //1
 'quotes',         //2 CORRECT
@@ -37,7 +37,7 @@ var Answers = [
 //User input
 var userAnswers = []
 //Actual Answers
-var adminAnswers = ['2', '2', '0', '2', '3']
+var adminAnswers = ['2', '2', '3', '2', '3']
 
 //ElementById Simplifier
 function getid(x) {
@@ -122,7 +122,10 @@ function myTimer() {
     timeLeft--;
     timeEl.textContent = timeLeft + " seconds left.";
 
-    if(timeLeft === 0) {
+    if (showResults() === true) {
+      clearInterval(timerInterval);
+    }
+    else if(timeLeft === 0) {
       clearInterval(timerInterval);
       alert('Out of time!')
       showResults();
@@ -131,22 +134,39 @@ function myTimer() {
     }, 1000);
   }
 
-//Shows results of quiz
-function showResults() {
-  getid('question').style.display = 'none';
-  getid('buttons').style.display = 'none';
-  alert('Currently not implemented!')
+//checks for similarities in userAnswers/adminAnswers array
+function filter() {
+  for (i = 0; i < userAnswers.length; i++) {
+    console.log(i)
+    if (userAnswers[i] === adminAnswers[i]) {
+      score = score + 10
+      console.log(score)
+    }
+    else {
+      console.log(null)
+    }
+  }
 }
 
-startButton.addEventListener('click', buildQuiz);
-startButton.addEventListener('click', myTimer);
-startButton.addEventListener('click', questionHide);
-btn0.addEventListener('click', buildQuiz)
-btn1.addEventListener('click', buildQuiz)
-btn2.addEventListener('click', buildQuiz)
-btn3.addEventListener('click', buildQuiz)
+//Shows results of quiz
+function showResults() {
+  filter();
+  score = score + timeLeft
+  getid('question').style.display = 'none';
+  getid('buttons').style.display = 'none';
+  getid('score').style.display = 'block';
+  getid('score').innerHTML = score;
+}
+
 btn0.addEventListener('click', userRecord0)
 btn1.addEventListener('click', userRecord1)
 btn2.addEventListener('click', userRecord2)
 btn3.addEventListener('click', userRecord3)
+btn0.addEventListener('click', buildQuiz)
+btn1.addEventListener('click', buildQuiz)
+btn2.addEventListener('click', buildQuiz)
+btn3.addEventListener('click', buildQuiz)
+startButton.addEventListener('click', buildQuiz);
+startButton.addEventListener('click', myTimer);
+startButton.addEventListener('click', questionHide);
 viewHighscores.addEventListener('click', showResults);
