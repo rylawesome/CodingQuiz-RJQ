@@ -10,7 +10,7 @@ var Questions = [
 'Arrays in Javascript can be used to store _____.',
 'String values must be enclosed within _____ when being assigned to variables.',
 'A very useful tool used during development and debugging for printing content to the debugger is:',
-]
+];
 //List of all possible answers
 var Answers = [
 'strings',  //0
@@ -33,11 +33,17 @@ var Answers = [
 'terminal / bash',  //1
 'for loops',        //2
 'console.log',      //3 CORRECT
-]
+];
 //User input
-var userAnswers = []
+var userAnswers = [];
 //Actual Answers
-var adminAnswers = ['2', '2', '3', '2', '3']
+var adminAnswers = ['2', '2', '3', '2', '3'];
+//High Score Variables
+var scoreInput = document.querySelector("#score-text");
+var scoreForm = document.querySelector("#score-form");
+var scoreList = document.querySelector("#score-list");
+
+var todos = [];
 
 //ElementById Simplifier
 function getid(x) {
@@ -131,7 +137,7 @@ function myTimer() {
     }, 1000);
   }
 
-//checks for similarities in userAnswers/adminAnswers array
+//compares userAnswers and adminAnswers array for score
 function filter() {
   for (i = 0; i < userAnswers.length; i++) {
     console.log(i)
@@ -148,12 +154,71 @@ function filter() {
 //Shows results of quiz
 function showResults() {
   filter();
+  getid('score-form').style.display = 'block';
+  callHscore();
   score = score + timeLeft
   getid('question').style.display = 'none';
   getid('buttons').style.display = 'none';
   getid('score').style.display = 'block';
   getid('score').innerHTML = score;
 }
+
+function callHscore() {
+  // Get stored highscores from localStorage
+  var storedHscore = JSON.parse(localStorage.getItem("hscore"));
+
+  // If todos were retrieved from localStorage, update the todos array to it
+  if (storedHscore !== null) {
+    hscore = storedHscore;
+  }
+
+  // Render todos to the DOM
+  renderHscore();
+}
+
+function renderHscore() {
+  scoreList.innerHTML = "";
+
+// New li for highscores
+for (var j = 0; i < hscore.length; j++) {
+  var hscore = hscore[i];
+
+  var li = document.createElement("li");
+  li.textContent = hscore + score;
+  li.setAttribute("data-index", j);
+
+  var button = document.createElement("button");
+  button.textContent = "Complete";
+
+  li.appendChild(button);
+  todoList.appendChild(li);
+}
+}
+
+function storeHscore() {
+  // String "hscore" in localStorage to array
+  localStorage.setItem("hscore", JSON.stringify(hscore));
+}
+
+// On form submit
+scoreForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  var scoreText = scoreInput.value.trim();
+
+  // Do not submit blank text
+  if (scoreText === "") {
+    return;
+  }
+
+  // Add new todoText to todos array, clear the input
+  hscore.push(scoreText);
+  scoreInput.value = "";
+
+  // Store updated todos in localStorage, re-render the list
+  storeHscore();
+  renderHscore();
+});
 
 btn0.addEventListener('click', userRecord0)
 btn1.addEventListener('click', userRecord1)

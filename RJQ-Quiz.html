@@ -30,13 +30,16 @@
 <div id = "startButtons">
     <button  id ="startButton">Start!</button>
 </div>
+<!--Track scores-->
 <div class ='score'>
     <p id ='score' style ='display:none'></p>
 </div>
-
-<!--Track scores-->
-
 <!--High scores saved to localstorage-->
+<form id="score-form" method="POST" style ='display:none'>
+    <label for="score-text">Add initials to the high score list</label>
+    <input type="text" placeholder="Add initials" name="score-text" id="score-text" />
+  </form>
+
 
 <script src="./assets/script.js"></script>
 </body>
